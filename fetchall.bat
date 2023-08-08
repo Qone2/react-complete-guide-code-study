@@ -1,0 +1,1 @@
+FOR /f "tokens=*" %i IN ('git branch -r ^| findstr /v "HEAD master"') DO git checkout --track %~ni

@@ -21,8 +21,22 @@ function Form(props) {
     props.calculateHandler(userInput);
   }
 
+  function resetHandler(event) {
+    event.preventDefault();
+    setDuration("");
+    setCurrentSaving("");
+    setExpectedReturn("");
+    setYearlyContrib("");
+
+    props.resetHandler();
+  }
+
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
+    <form
+      className={styles.form}
+      onSubmit={submitHandler}
+      onReset={resetHandler}
+    >
       <div className={styles["input-group"]}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
@@ -66,8 +80,12 @@ function Form(props) {
         </p>
       </div>
       <p className="actions">
-        <Button className="buttonAlt">Reset</Button>
-        <Button className="button">Calculate</Button>
+        <Button type="reset" className="buttonAlt">
+          Reset
+        </Button>
+        <Button type="submit" className="button">
+          Calculate
+        </Button>
       </p>
     </form>
   );

@@ -39,15 +39,14 @@ function App() {
     setResult(yearlyData);
   };
 
+  function resetHandler() {
+    setResult([]);
+  }
+
   return (
     <div>
       <Header />
-
-      <Form calculateHandler={calculateHandler} />
-
-      {/* Todo: Show below table conditionally (only once result data is available) */}
-      {/* Show fallback text if no data is available */}
-
+      <Form calculateHandler={calculateHandler} resetHandler={resetHandler} />
       <ResultTable result={result} />
     </div>
   );

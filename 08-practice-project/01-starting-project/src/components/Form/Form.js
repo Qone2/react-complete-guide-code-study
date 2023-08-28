@@ -1,4 +1,5 @@
 import styles from "./Form.module.css";
+import Button from "../UI/Button";
 
 function Form() {
   return (
@@ -26,12 +27,8 @@ function Form() {
         </p>
       </div>
       <p className="actions">
-        <button type="reset" className="buttonAlt">
-          Reset
-        </button>
-        <button type="submit" className="button">
-          Calculate
-        </button>
+        <Button className="buttonAlt">Reset</Button>
+        <Button className="button">Calculate</Button>
       </p>
     </form>
   );

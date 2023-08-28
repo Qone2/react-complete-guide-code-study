@@ -21,8 +21,7 @@ function Form(props) {
     props.calculateHandler(userInput);
   }
 
-  function resetHandler(event) {
-    event.preventDefault();
+  function resetHandler() {
     setDuration("");
     setCurrentSaving("");
     setExpectedReturn("");

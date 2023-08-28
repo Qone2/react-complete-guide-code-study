@@ -1,5 +1,12 @@
 import styles from "./ResultTable.module.css";
 
+const formatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+
 function ResultTable(props) {
   let tbody = (
     <tbody>
@@ -19,15 +26,8 @@ function ResultTable(props) {
         {props.result.map((e) => (
           <tr key={e.year}>
             <td>{e.year}</td>
-            <td>
-              $
-              {e.savingsEndOfYear
-                .toFixed(2)
-                .replace(/\d(?=(\d{3})+\.)/g, "$&,")}
-            </td>
-            <td>
-              ${e.yearlyInterest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}
-            </td>
+            <td>{formatter.format(e.savingsEndOfYear)}</td>
+            <td>{formatter.format(e.yearlyInterest)}</td>
             <td>
               ${e.totalInterest.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,")}
             </td>

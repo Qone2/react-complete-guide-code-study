@@ -13,6 +13,15 @@ function AddUser(props) {
 
   function onSubmitHandler(event) {
     event.preventDefault();
+    if (userInfo.name.trim().length === 0 || userInfo.age.trim().length === 0) {
+      console.log("이름과 나이를 입력하세요.");
+      return;
+    }
+
+    if (+userInfo.age < 0) {
+      console.log("나이가 0보다 작을 수 없습니다.");
+      return;
+    }
 
     props.onAddUser({ ...userInfo });
     setUserInfo(initialState);

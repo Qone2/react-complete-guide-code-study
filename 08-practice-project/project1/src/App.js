@@ -4,14 +4,18 @@ import ResultTable from "./components/ResultTable/ResultTable";
 import { useState } from "react";
 
 function App() {
-  const [result, setResult] = useState([]);
+  const [userInput, setUserInput] = useState(null);
 
   const calculateHandler = (userInput) => {
-    // Should be triggered when form is submitted
-    // You might not directly want to bind it to the submit event on the form though...
+    setUserInput(userInput);
+  };
 
-    const yearlyData = []; // per-year results
+  function resetHandler() {
+    setUserInput(null);
+  }
 
+  const yearlyData = [];
+  if (userInput !== null) {
     let currentSavings = +userInput["current-savings"]; // feel free to change the shape of this input object!
     const yearlyContribution = +userInput["yearly-contribution"]; // as mentioned: feel free to change the shape...
     const expectedReturn = +userInput["expected-return"] / 100;
@@ -19,7 +23,7 @@ function App() {
     let totalInterest = 0;
     let investedCapital = currentSavings;
 
-    // The below code calculates yearly results (total savings, interest etc)
+    // The below code calculates yearly results (total savings, interest etc.)
     for (let i = 0; i < duration; i++) {
       const yearlyInterest = currentSavings * expectedReturn;
       currentSavings += yearlyInterest + yearlyContribution;
@@ -34,20 +38,13 @@ function App() {
         investedCapital: investedCapital,
       });
     }
-
-    // do something with yearlyData ...
-    setResult(yearlyData);
-  };
-
-  function resetHandler() {
-    setResult([]);
   }
 
   return (
     <div>
       <Header />
       <Form calculateHandler={calculateHandler} resetHandler={resetHandler} />
-      <ResultTable result={result} />
+      <ResultTable result={yearlyData} />
     </div>
   );
 }

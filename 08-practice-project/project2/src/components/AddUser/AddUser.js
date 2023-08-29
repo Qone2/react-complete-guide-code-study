@@ -26,14 +26,15 @@ function AddUser(props) {
   }
 
   return (
-    <Card>
-      <form className={styles.input} onSubmit={onSubmitHandler}>
-        <label>Username</label>
+    <Card className={styles.input}>
+      <form onSubmit={onSubmitHandler}>
+        <label htmlFor={"text"}>Username</label>
         <input
+          type={"text"}
           value={userInfo.name}
           onChange={(event) => inputChangeHandler("name", event.target.value)}
         />
-        <label>Age (Years)</label>
+        <label htmlFor={"text"}>Age (Years)</label>
         <input
           type={"number"}
           value={userInfo.age}

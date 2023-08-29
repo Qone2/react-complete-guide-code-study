@@ -2,30 +2,57 @@ import styles from "./Form.module.css";
 import Button from "../UI/Button";
 import { useState } from "react";
 
+const currentSavingId = "current-savings";
+const yearlyContribId = "yearly-contribution";
+const expectedReturnId = "expected-return";
+const durationId = "duration";
+
+const initialUserInput = {
+  [currentSavingId]: "10000",
+  [yearlyContribId]: "1200",
+  [expectedReturnId]: "5",
+  [durationId]: "15",
+};
+
 function Form(props) {
-  const [currentSaving, setCurrentSaving] = useState("");
-  const [yearlyContrib, setYearlyContrib] = useState("");
-  const [expectedReturn, setExpectedReturn] = useState("");
-  const [duration, setDuration] = useState("");
+  // const [currentSaving, setCurrentSaving] = useState("");
+  // const [yearlyContrib, setYearlyContrib] = useState("");
+  // const [expectedReturn, setExpectedReturn] = useState("");
+  // const [duration, setDuration] = useState("");
+  const [userInput, setUserInput] = useState({
+    [currentSavingId]: "10000",
+    [yearlyContribId]: "1200",
+    [expectedReturnId]: "5",
+    [durationId]: "15",
+  });
+
+  function inputChangeHandler(input, value) {
+    setUserInput({
+      ...userInput,
+      [input]: value,
+    });
+  }
 
   function submitHandler(event) {
     event.preventDefault();
 
-    const userInput = {
-      "current-savings": currentSaving,
-      "yearly-contribution": yearlyContrib,
-      "expected-return": expectedReturn,
-      duration: duration,
-    };
+    // const userInput = {
+    //   currentSavingId: currentSaving,
+    //   yearlyContribId: yearlyContrib,
+    //   expectedReturnId: expectedReturn,
+    //   duration: duration,
+    // };
 
     props.calculateHandler(userInput);
   }
 
   function resetHandler() {
-    setDuration("");
-    setCurrentSaving("");
-    setExpectedReturn("");
-    setYearlyContrib("");
+    // setDuration("");
+    // setCurrentSaving("");
+    // setExpectedReturn("");
+    // setYearlyContrib("");
+
+    setUserInput(initialUserInput);
 
     props.resetHandler();
   }
@@ -38,43 +65,51 @@ function Form(props) {
     >
       <div className={styles["input-group"]}>
         <p>
-          <label htmlFor="current-savings">Current Savings ($)</label>
+          <label htmlFor={currentSavingId}>Current Savings ($)</label>
           <input
-            value={currentSaving}
-            onChange={(event) => setCurrentSaving(event.target.value)}
+            value={userInput[currentSavingId]}
+            onChange={(event) =>
+              inputChangeHandler(currentSavingId, event.target.value)
+            }
             type="number"
-            id="current-savings"
+            id={currentSavingId}
           />
         </p>
         <p>
-          <label htmlFor="yearly-contribution">Yearly Savings ($)</label>
+          <label htmlFor={yearlyContribId}>Yearly Savings ($)</label>
           <input
             type="number"
-            id="yearly-contribution"
-            value={yearlyContrib}
-            onChange={(event) => setYearlyContrib(event.target.value)}
+            id={yearlyContribId}
+            value={userInput[yearlyContribId]}
+            onChange={(event) =>
+              inputChangeHandler(yearlyContribId, event.target.value)
+            }
           />
         </p>
       </div>
       <div className={styles["input-group"]}>
         <p>
-          <label htmlFor="expected-return">
+          <label htmlFor={expectedReturnId}>
             Expected Interest (%, per year)
           </label>
           <input
             type="number"
-            id="expected-return"
-            value={expectedReturn}
-            onChange={(event) => setExpectedReturn(event.target.value)}
+            id={expectedReturnId}
+            value={userInput[expectedReturnId]}
+            onChange={(event) =>
+              inputChangeHandler(expectedReturnId, event.target.value)
+            }
           />
         </p>
         <p>
-          <label htmlFor="duration">Investment Duration (years)</label>
+          <label htmlFor={durationId}>Investment Duration (years)</label>
           <input
             type="number"
-            id="duration"
-            value={duration}
-            onChange={(event) => setDuration(event.target.value)}
+            id={durationId}
+            value={userInput[durationId]}
+            onChange={(event) =>
+              inputChangeHandler(durationId, event.target.value)
+            }
           />
         </p>
       </div>

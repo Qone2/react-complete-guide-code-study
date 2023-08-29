@@ -1,7 +1,7 @@
 function UserItem(props) {
   return (
     <div>
-      {props.name} ({props.age} years old)
+      {props.userName} ({props.userAge} years old)
     </div>
   );
 }

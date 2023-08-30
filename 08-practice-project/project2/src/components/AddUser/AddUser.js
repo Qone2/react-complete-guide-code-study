@@ -1,21 +1,26 @@
 import styles from "./AddUser.module.css";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ErrorModal from "../UI/ErrorModal";
 
-const initialState = {
-  name: "",
-  age: "",
-};
+// const initialState = {
+//   name: "",
+//   age: "",
+// };
 
 function AddUser(props) {
-  const [userInfo, setUserInfo] = useState(initialState);
+  // const [userInfo, setUserInfo] = useState(initialState);
+  const nameInputRef = useRef();
+  const ageInputRef = useRef();
   const [error, setError] = useState();
 
   function onSubmitHandler(event) {
     event.preventDefault();
-    if (userInfo.name.trim().length === 0 || userInfo.age.trim().length === 0) {
+    if (
+      nameInputRef.current.value.trim().length === 0 ||
+      ageInputRef.current.value.trim().length === 0
+    ) {
       setError({
         title: "Invalid input.",
         message: "이름과 나이를 입력하세요.",
@@ -23,7 +28,7 @@ function AddUser(props) {
       return;
     }
 
-    if (+userInfo.age < 0) {
+    if (+ageInputRef.current.value < 0) {
       setError({
         title: "Invalid age.",
         message: "나이가 0보다 작을 순 없습니다.",
@@ -31,16 +36,21 @@ function AddUser(props) {
       return;
     }
 
-    props.onAddUser({ ...userInfo });
-    setUserInfo(initialState);
+    props.onAddUser({
+      name: nameInputRef.current.value,
+      age: ageInputRef.current.value,
+    });
+    // setUserInfo(initialState);
+    nameInputRef.current.value = "";
+    ageInputRef.current.value = "";
   }
 
-  function inputChangeHandler(input, value) {
-    setUserInfo((prevState) => ({
-      ...prevState,
-      [input]: value,
-    }));
-  }
+  // function inputChangeHandler(input, value) {
+  //   setUserInfo((prevState) => ({
+  //     ...prevState,
+  //     [input]: value,
+  //   }));
+  // }
 
   function onCloseHandler() {
     setError(undefined);
@@ -60,14 +70,16 @@ function AddUser(props) {
           <label htmlFor={"text"}>Username</label>
           <input
             type={"text"}
-            value={userInfo.name}
-            onChange={(event) => inputChangeHandler("name", event.target.value)}
+            // value={userInfo.name}
+            // onChange={(event) => inputChangeHandler("name", event.target.value)}
+            ref={nameInputRef}
           />
           <label htmlFor={"text"}>Age (Years)</label>
           <input
             type={"number"}
-            value={userInfo.age}
-            onChange={(event) => inputChangeHandler("age", event.target.value)}
+            // value={userInfo.age}
+            // onChange={(event) => inputChangeHandler("age", event.target.value)}
+            ref={ageInputRef}
           />
           <Button type={"submit"}>Add User</Button>
         </form>

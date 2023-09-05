@@ -6,15 +6,23 @@ import Button from "../UI/Button/Button";
 
 const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState("");
-  const [emailIsValid, setEmailIsValid] = useState();
+  const [emailIsValid, setEmailIsValid] = useState(false);
   const [enteredPassword, setEnteredPassword] = useState("");
-  const [passwordIsValid, setPasswordIsValid] = useState();
+  const [passwordIsValid, setPasswordIsValid] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
 
   useEffect(() => {
-    setFormIsValid(
-      enteredEmail.includes("@") && enteredPassword.trim().length > 6,
-    );
+    const identifier = setTimeout(() => {
+      console.log("검사하는 중");
+      setFormIsValid(
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6,
+      );
+    }, 500);
+
+    return () => {
+      console.log("clean up");
+      clearTimeout(identifier);
+    };
   }, [enteredEmail, enteredPassword]);
 
   const emailChangeHandler = (event) => {
